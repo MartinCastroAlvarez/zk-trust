@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "zk-trust"
+version = "0.1.0"
+description = ""
+authors = ["Martin Castro <martincastro.10.5@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.32.3"
+web3 = "^7.8.0"
+begins = "^0.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

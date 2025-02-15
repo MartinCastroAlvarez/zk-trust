@@ -1,0 +1,40 @@
+def main(
+    private field address_part1, // First half of the address
+    private field address_part2, // Second half of the address
+    private field days_ago_added,
+    private field is_active,
+    private field volume,
+    private field market_cap,
+    private field total_supply,
+    private field has_source_code
+) -> (field, field, field, field) {
+
+    // Define constants for normalization directly within the function
+    field X = 5000; // Example max value for days_ago_added
+    field Y = 1000000000; // Example max value for volume
+    field Z = 2000000000; // Example max value for market_cap
+    field W = 100000000000; // Example max value for total_supply
+
+    // Normalize the values to be between 0 and 1
+    field normalized_days = days_ago_added / X;
+    field normalized_volume = volume / Y;
+    field normalized_market_cap = market_cap / Z;
+    field normalized_total_supply = total_supply / W;
+    field normalized_has_source_code = has_source_code; // Assuming this is either 0 or 1
+
+    // Include address in the score calculation by integrating its parts normalized
+    field address_influence = (address_part1 + address_part2) / (1 << 160); // Normalize by max value of address parts, assuming each part is 80 bits
+
+    // Calculate the product of scores incorporating address influence
+    field score = (is_active * // Assuming is_active is either 0 or 1, acts as a switch
+                   normalized_days *
+                   normalized_volume *
+                   normalized_market_cap *
+                   normalized_total_supply *
+                   normalized_has_source_code);
+
+    // Combine the score with the address influence
+    field signature = score * address_influence;
+
+    return (score, signature, address_part1, address_part2);
+}
